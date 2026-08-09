@@ -1,0 +1,24 @@
+name: Valhalla DB - Schema & Docker Validation CI
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  validate-db-setup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Validate Docker Compose Configuration
+        run: docker compose config
+
+      - name: Test PostgreSQL & Redis Spin Up
+        run: |
+          docker compose up -d
+          sleep 10
+          docker exec valhalla_postgres psql -U valhalla_user -d valhalla_db -c "\dt"
