@@ -2,7 +2,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TYPE user_role AS ENUM ('SUPERADMIN', 'ADMIN', 'TRAINER', 'MEMBER');
 CREATE TYPE subscription_status AS ENUM('ACTIVE', 'EXPIRED', 'PENDING', 'CANCELLED');
-CREATE TYPE payment_method AS EMUM('CASH', 'CREDIT_CARD', 'DEBIT_CARD', 'TRANSFER');
+CREATE TYPE payment_method AS ENUM('CASH', 'CREDIT_CARD', 'DEBIT_CARD', 'TRANSFER');
 CREATE TYPE checkin_status AS ENUM('ALLOWED', 'DENIED_EXPIRED', 'DENIED_NOT_FOUND');
 
 CREATE TABLE gym_config (
@@ -30,7 +30,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE plans (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_V4(),
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(100) NOT NULL,
     duration_days INT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE check_ins (
 );
 
 CREATE TABLE ai_routines (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_V4(),
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     fitness_goal VARCHAR(100) NOT NULL,
     routine_json JSONB NOT NULL,
